@@ -24,37 +24,5 @@ public class EmployeeRepositoryImpl implements EmployeeRepository{
         return employeeList;
     }
 
-    @Override
-    public int getSumSalary() {
-        int i = employeeList.stream().flatMapToInt(employee -> IntStream.of(employee.getSalary())).sum();
-        return i;
-    }
-
-    @Override
-    public Optional<Employee> getMaxSalary() {
-        Optional<Employee> employee = employeeList.stream()
-                .max(comparator);
-        return employee;
-    }
-
-    @Override
-    public Optional<Employee> getMinSalary() {
-        Optional<Employee> employee = employeeList.stream()
-                .min(comparator);
-        return employee;
-    }
-
-    @Override
-    public List<Employee> getEmployeeWithSalaryAboveAverage() {
-
-        return employeeList.stream().sorted(comparator).filter(employee -> employee.getSalary()>95000).collect(Collectors.toList());
-    }
-
-    Comparator<Employee> comparator = (e1, e2) -> {
-        if (e1.getSalary()>e2.getSalary()) return 1;
-        if (e2.getSalary() > e1.getSalary()) return -1;
-        return 0;
-    };
-
 
 }

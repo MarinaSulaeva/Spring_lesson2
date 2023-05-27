@@ -4,8 +4,11 @@ import org.springframework.stereotype.Service;
 import ru.skypro.lessons.springboot.weblibrary_1.pojo.Employee;
 import ru.skypro.lessons.springboot.weblibrary_1.repository.EmployeeRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
@@ -22,21 +25,23 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public int getSumSalary() {
-        return employeeRepository.getSumSalary();
+        return getAllEmployees().stream().flatMapToInt(employee -> IntStream.of(employee.getSalary())).sum();
     }
 
     @Override
     public Optional<Employee> getMaxSalary() {
-        return employeeRepository.getMaxSalary();
+        return getAllEmployees().stream()
+                .max(Comparator.comparingDouble(Employee::getSalary));
     }
 
     @Override
     public Optional<Employee> getMinSalary() {
-        return employeeRepository.getMinSalary();
+        return getAllEmployees().stream()
+                .min(Comparator.comparingDouble(Employee::getSalary));
     }
 
     @Override
     public List<Employee> getEmployeeWithSalaryAboveAverage() {
-        return employeeRepository.getEmployeeWithSalaryAboveAverage();
+        return getAllEmployees().stream().sorted(Comparator.comparingDouble(Employee::getSalary)).filter(employee -> employee.getSalary()>getSumSalary()/getAllEmployees().size()).collect(Collectors.toList());
     }
 }
