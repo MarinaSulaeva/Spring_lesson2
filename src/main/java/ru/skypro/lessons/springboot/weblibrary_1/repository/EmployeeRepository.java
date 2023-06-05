@@ -2,9 +2,14 @@ package ru.skypro.lessons.springboot.weblibrary_1.repository;
 
 import ru.skypro.lessons.springboot.weblibrary_1.pojo.Employee;
 
-import java.util.List;
-import java.util.Optional;
+import java.io.IOException;
+import java.util.Map;
 
 public interface EmployeeRepository {
-    public List<Employee> getAllEmployees();
+    public Map<Integer, Employee> getAllEmployees();
+    public Employee getEmployeeById(Integer id) throws IOException;
+    public void addEmployee(Employee employee) throws IOException;
+    public void editEmployee(Employee employee) throws IOException;
+    public void deleteEmployeeById(Integer id) throws IOException;
+
 }

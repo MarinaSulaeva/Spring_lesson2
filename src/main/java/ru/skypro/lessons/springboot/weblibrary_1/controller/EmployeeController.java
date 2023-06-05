@@ -1,12 +1,11 @@
 package ru.skypro.lessons.springboot.weblibrary_1.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.SneakyThrows;
+import org.springframework.web.bind.annotation.*;
 import ru.skypro.lessons.springboot.weblibrary_1.pojo.Employee;
 import ru.skypro.lessons.springboot.weblibrary_1.service.EmployeeService;
 
-import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -19,7 +18,7 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public List<Employee> showCounter() {
+    public Map<Integer, Employee> showCounter() {
         return employeeService.getAllEmployees();
     }
 
@@ -39,7 +38,36 @@ public class EmployeeController {
     }
 
     @GetMapping("/high-salary")
-    public List<Employee> getEmployeeWithSalaryAboveAverage() {
+    public Map<Integer, Employee> getEmployeeWithSalaryAboveAverage() {
         return employeeService.getEmployeeWithSalaryAboveAverage();
+    }
+
+    @SneakyThrows
+    @GetMapping("/{id}")
+    public Employee getEmployeeById(@PathVariable Integer id) {
+            return employeeService.getEmployeeById(id);
+    }
+
+    @GetMapping("/salary/higher")
+    public Map<Integer, Employee> getEmployeesWithSalaryHigherThan(@RequestParam("compareSalary") Integer compareSalary) {
+        return employeeService.getEmployeesWithSalaryHigherThan(compareSalary);
+    }
+
+    @DeleteMapping("/{id}")
+    @SneakyThrows
+    public void deleteEmployeeById(@PathVariable Integer id) {
+        employeeService.deleteEmployeeById(id);
+    }
+
+    @PostMapping("/")
+    @SneakyThrows
+    public void addEmployee(@RequestBody Employee employee) {
+        employeeService.addEmployee(employee);
+    }
+
+    @PutMapping("/")
+    @SneakyThrows
+    public void editEmployee(@RequestBody Employee employee) {
+        employeeService.editEmployee(employee);
     }
 }
