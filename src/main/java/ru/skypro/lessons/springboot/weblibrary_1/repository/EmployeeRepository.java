@@ -20,8 +20,9 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
             "WHERE e.position = p AND e.id=?1")
     Optional<EmployeeFullInfo> findByIdFullInfo(Integer id);
 
-    @Query("SELECT MAX(e.salary) FROM Employee e")
-    List<Employee> findEmployeeWithHighestSalary();
+//    @Query("SELECT MAX(e.salary) FROM Employee e")
+//    данный метод с аннотацией query выдает ошибку 404
+    Optional<Employee> findFirstByOrderBySalaryDesc();
 
     @Query("SELECT new ru.skypro.lessons.springboot.weblibrary_1.DTO." +
             "EmployeeFullInfo(e.name , e.salary , p.name) " +

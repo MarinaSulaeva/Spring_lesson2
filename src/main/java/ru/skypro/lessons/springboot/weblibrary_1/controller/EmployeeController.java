@@ -83,7 +83,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/withHighestSalary")
-    public List<EmployeeDTO> getTheHighestSalary() {
+    public EmployeeDTO getTheHighestSalary() {
         return employeeService.getTheHighestSalary();
     }
 

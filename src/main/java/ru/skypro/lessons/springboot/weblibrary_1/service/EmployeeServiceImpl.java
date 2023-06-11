@@ -102,9 +102,8 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public List<EmployeeDTO> getTheHighestSalary() {
-        List<Employee> employeeList= employeeRepository.findEmployeeWithHighestSalary();
-        return  employeeList.stream().map(EmployeeDTO::fromEmployee).collect(Collectors.toList());
+    public EmployeeDTO getTheHighestSalary() {
+        return EmployeeDTO.fromEmployee(employeeRepository.findFirstByOrderBySalaryDesc().orElseThrow(()->new IllegalArgumentException("Данные в таблице отсутсвуют")));
     }
     @Override
     public EmployeeDTO getEmployeeById(Integer id) {
