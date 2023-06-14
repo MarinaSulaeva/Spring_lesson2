@@ -1,11 +1,11 @@
 package ru.skypro.lessons.springboot.weblibrary_1.controller;
 
-import lombok.SneakyThrows;
-import org.springframework.web.bind.annotation.*;
-import ru.skypro.lessons.springboot.weblibrary_1.pojo.Employee;
-import ru.skypro.lessons.springboot.weblibrary_1.service.EmployeeService;
 
-import java.util.Map;
+import org.springframework.web.bind.annotation.*;
+import ru.skypro.lessons.springboot.weblibrary_1.DTO.EmployeeDTO;
+import ru.skypro.lessons.springboot.weblibrary_1.DTO.EmployeeFullInfo;
+import ru.skypro.lessons.springboot.weblibrary_1.service.EmployeeService;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -18,7 +18,7 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public Map<Integer, Employee> showCounter() {
+    public List<EmployeeFullInfo> showCounter() {
         return employeeService.getAllEmployees();
     }
 
@@ -28,46 +28,63 @@ public class EmployeeController {
     }
 
     @GetMapping("/salary/max")
-    public Optional<Employee> getMaxSalary() {
+    public Optional<EmployeeFullInfo> getMaxSalary() {
     return employeeService.getMaxSalary();
     }
 
     @GetMapping("/salary/min")
-    public Optional<Employee> getMinSalary(){
+    public Optional<EmployeeFullInfo> getMinSalary(){
         return employeeService.getMinSalary();
     }
 
     @GetMapping("/high-salary")
-    public Map<Integer, Employee> getEmployeeWithSalaryAboveAverage() {
+    public List<EmployeeFullInfo> getEmployeeWithSalaryAboveAverage() {
         return employeeService.getEmployeeWithSalaryAboveAverage();
     }
 
-    @SneakyThrows
-    @GetMapping("/{id}")
-    public Employee getEmployeeById(@PathVariable Integer id) {
-            return employeeService.getEmployeeById(id);
-    }
-
     @GetMapping("/salary/higher")
-    public Map<Integer, Employee> getEmployeesWithSalaryHigherThan(@RequestParam("compareSalary") Integer compareSalary) {
+    public List<EmployeeFullInfo> getEmployeesWithSalaryHigherThan(@RequestParam("compareSalary") Integer compareSalary) {
         return employeeService.getEmployeesWithSalaryHigherThan(compareSalary);
     }
 
     @DeleteMapping("/{id}")
-    @SneakyThrows
     public void deleteEmployeeById(@PathVariable Integer id) {
         employeeService.deleteEmployeeById(id);
     }
 
     @PostMapping("/")
-    @SneakyThrows
-    public void addEmployee(@RequestBody Employee employee) {
-        employeeService.addEmployee(employee);
+    public void addEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        employeeService.addEmployee(employeeDTO);
     }
 
     @PutMapping("/")
-    @SneakyThrows
-    public void editEmployee(@RequestBody Employee employee) {
-        employeeService.editEmployee(employee);
+    public void editEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        employeeService.editEmployee(employeeDTO);
     }
+
+    @GetMapping("/")
+    public List<EmployeeFullInfo> getEmployeeByPosition(@RequestParam("position") Integer position) {
+        return employeeService.getEmployeeByPosition(position);
+    }
+
+    @GetMapping("/{id}/fullInfo")
+    public EmployeeFullInfo getEmployeeByIdFullInfo(@PathVariable Integer id) {
+        return employeeService.getEmployeeByIdFullInfo(id);
+    }
+
+    @GetMapping("/page")
+    public List<EmployeeDTO> getEmployeeWithPaging(@RequestParam("page") Integer page) {
+        return employeeService.getEmployeeWithPaging(page);
+    }
+
+    @GetMapping("/{id}")
+    public EmployeeDTO getEmployeeById(@PathVariable Integer id) {
+        return employeeService.getEmployeeById(id);
+    }
+
+    @GetMapping("/withHighestSalary")
+    public EmployeeDTO getTheHighestSalary() {
+        return employeeService.getTheHighestSalary();
+    }
+
 }

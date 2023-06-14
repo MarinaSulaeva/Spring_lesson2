@@ -1,12 +1,16 @@
 package ru.skypro.lessons.springboot.weblibrary_1.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import ru.skypro.lessons.springboot.weblibrary_1.DTO.EmployeeDTO;
+import ru.skypro.lessons.springboot.weblibrary_1.DTO.EmployeeFullInfo;
 import ru.skypro.lessons.springboot.weblibrary_1.pojo.Employee;
 import ru.skypro.lessons.springboot.weblibrary_1.repository.EmployeeRepository;
+import ru.skypro.lessons.springboot.weblibrary_1.repository.PagingAndSortingRepository;
 
-import java.io.IOException;
 import java.util.Comparator;
-import java.util.Map;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -14,66 +18,104 @@ import java.util.stream.IntStream;
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
     private final EmployeeRepository employeeRepository;
+    private final PagingAndSortingRepository pagingAndSortingRepository;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, PagingAndSortingRepository pagingAndSortingRepository) {
         this.employeeRepository = employeeRepository;
+        this.pagingAndSortingRepository=pagingAndSortingRepository;
     }
 
+
+
     @Override
-    public Map<Integer, Employee> getAllEmployees() {
-        return employeeRepository.getAllEmployees();
+    public List<EmployeeFullInfo> getAllEmployees() {
+        return employeeRepository.findAllEmployeeFullInfo();
     }
 
     @Override
     public int getSumSalary() {
-        return getAllEmployees().values().stream().
+        return getAllEmployees().stream().
                 flatMapToInt(employee -> IntStream.of(employee.getSalary())).sum();
     }
 
     @Override
-    public Optional<Employee> getMaxSalary() {
-        return getAllEmployees().values().stream()
-                .max(Comparator.comparingDouble(Employee::getSalary));
+    public Optional<EmployeeFullInfo> getMaxSalary() {
+        return getAllEmployees().stream()
+                .max(Comparator.comparingDouble(EmployeeFullInfo::getSalary));
     }
 
     @Override
-    public Optional<Employee> getMinSalary() {
-        return getAllEmployees().values().stream()
-                .min(Comparator.comparingDouble(Employee::getSalary));
+    public Optional<EmployeeFullInfo> getMinSalary() {
+        return getAllEmployees().stream()
+                .min(Comparator.comparingDouble(EmployeeFullInfo::getSalary));
     }
 
     @Override
-    public Map<Integer, Employee> getEmployeeWithSalaryAboveAverage() {
+    public List<EmployeeFullInfo> getEmployeeWithSalaryAboveAverage() {
         int i = getSumSalary()/getAllEmployees().size();
-        return getAllEmployees().entrySet().stream()
-                .filter(entry -> entry.getValue().getSalary()>i)
-                .collect(Collectors.toMap(Map.Entry :: getKey, Map.Entry :: getValue));
+        return getAllEmployees().stream()
+                .filter(e -> e.getSalary()>i)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Employee getEmployeeById(Integer id) throws IOException {
-        return employeeRepository.getEmployeeById(id);
+    public List<EmployeeFullInfo> getEmployeesWithSalaryHigherThan(Integer compareSalary) {
+        return getAllEmployees().stream().
+                filter(e -> e.getSalary()>compareSalary).
+                collect(Collectors.toList());
     }
 
     @Override
-    public Map<Integer, Employee> getEmployeesWithSalaryHigherThan(Integer compareSalary) {
-        return getAllEmployees().entrySet().stream().
-                filter(entry -> entry.getValue().getSalary()>compareSalary).
-                collect(Collectors.toMap(Map.Entry :: getKey, Map.Entry :: getValue));
+    public void deleteEmployeeById(Integer id) {
+        if (id > employeeRepository.findAllEmployeeFullInfo().size()) {
+            throw new IllegalArgumentException("Введен не корректный ID");
+        }
+        employeeRepository.deleteById(id);
     }
 
     @Override
-    public void deleteEmployeeById(Integer id) throws IOException {
-        employeeRepository.deleteEmployeeById(id);
+    public void editEmployee(EmployeeDTO employeeDTO) {
+        if ( employeeDTO.getId()> employeeRepository.findAllEmployeeFullInfo().size()) {
+            throw new IllegalArgumentException("Введен не корректный ID");
+        }
+        employeeRepository.save(employeeDTO.toEmployee());
     }
 
     @Override
-    public void editEmployee(Employee employee) throws IOException {
-        employeeRepository.editEmployee(employee);
+    public void addEmployee(EmployeeDTO employeeDTO) {
+        if ( employeeDTO.getId()<= employeeRepository.findAllEmployeeFullInfo().size()) {
+            throw new IllegalArgumentException("Введен не корректный ID");
+        }
+        employeeRepository.save(employeeDTO.toEmployee());
     }
 
     @Override
-    public void addEmployee(Employee employee) throws IOException {
-        employeeRepository.addEmployee(employee);
+    public List<EmployeeFullInfo> getEmployeeByPosition(Integer position) {
+        return employeeRepository.findEmployeeByPosition(position);
     }
+
+    @Override
+    public List<EmployeeDTO> getEmployeeWithPaging(Integer page) {
+        Page<Employee> employeePage = pagingAndSortingRepository.findAll(PageRequest.of(page, 10));
+        List <Employee> employeeList = employeePage.stream().toList();
+        return employeeList.stream().map(EmployeeDTO::fromEmployee).collect(Collectors.toList());
+    }
+
+    @Override
+    public EmployeeDTO getTheHighestSalary() {
+        return EmployeeDTO.fromEmployee(employeeRepository.findFirstByOrderBySalaryDesc().orElseThrow(()->new IllegalArgumentException("Данные в таблице отсутсвуют")));
+    }
+    @Override
+    public EmployeeDTO getEmployeeById(Integer id) {
+        return EmployeeDTO.fromEmployee(employeeRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("Введен не корректный ID")));
+    }
+
+    @Override
+    public EmployeeFullInfo getEmployeeByIdFullInfo(Integer id) {
+        return employeeRepository.findByIdFullInfo(id).orElseThrow(() ->
+                new IllegalArgumentException("Введен не корректный ID"));
+    }
+
+
 }
