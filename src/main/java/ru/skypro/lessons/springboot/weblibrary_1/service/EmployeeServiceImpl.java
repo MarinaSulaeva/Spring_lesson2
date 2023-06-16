@@ -5,10 +5,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.skypro.lessons.springboot.weblibrary_1.DTO.EmployeeDTO;
 import ru.skypro.lessons.springboot.weblibrary_1.DTO.EmployeeFullInfo;
+import ru.skypro.lessons.springboot.weblibrary_1.DTO.EmployeeReport;
 import ru.skypro.lessons.springboot.weblibrary_1.pojo.Employee;
 import ru.skypro.lessons.springboot.weblibrary_1.repository.EmployeeRepository;
 import ru.skypro.lessons.springboot.weblibrary_1.repository.PagingAndSortingRepository;
 
+import java.nio.file.Files;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -115,6 +117,11 @@ public class EmployeeServiceImpl implements EmployeeService{
     public EmployeeFullInfo getEmployeeByIdFullInfo(Integer id) {
         return employeeRepository.findByIdFullInfo(id).orElseThrow(() ->
                 new IllegalArgumentException("Введен не корректный ID"));
+    }
+
+    @Override
+    public List<EmployeeReport> getReport() {
+        return employeeRepository.getReport();
     }
 
 

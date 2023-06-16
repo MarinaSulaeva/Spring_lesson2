@@ -1,6 +1,9 @@
 package ru.skypro.lessons.springboot.weblibrary_1.service;
 import ru.skypro.lessons.springboot.weblibrary_1.DTO.EmployeeDTO;
 import ru.skypro.lessons.springboot.weblibrary_1.DTO.EmployeeFullInfo;
+import ru.skypro.lessons.springboot.weblibrary_1.DTO.EmployeeReport;
+
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,4 +32,6 @@ public interface EmployeeService {
 
     List<EmployeeDTO> getEmployeeWithPaging(Integer page);
     EmployeeFullInfo getEmployeeByIdFullInfo(Integer id);
+
+    List<EmployeeReport> getReport();
 }
