@@ -2,7 +2,6 @@ package ru.skypro.lessons.springboot.weblibrary_1.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
-import ru.skypro.lessons.springboot.weblibrary_1.pojo.Report;
 import ru.skypro.lessons.springboot.weblibrary_1.pojo.ReportWithPath;
 
 import java.io.Serializable;

@@ -1,24 +1,14 @@
 package ru.skypro.lessons.springboot.weblibrary_1.controller;
 
-
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.lessons.springboot.weblibrary_1.DTO.EmployeeDTO;
 import ru.skypro.lessons.springboot.weblibrary_1.DTO.EmployeeFullInfo;
-import ru.skypro.lessons.springboot.weblibrary_1.DTO.EmployeeReport;
 import ru.skypro.lessons.springboot.weblibrary_1.service.EmployeeService;
-
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
@@ -116,10 +106,4 @@ public class EmployeeController {
             e.printStackTrace();
         }
     }
-
-    @GetMapping("/employeereport")
-    public List<EmployeeReport> getEmployeeReport() {
-        return employeeService.getReport();
-    }
-
 }

@@ -11,8 +11,8 @@ import java.io.Serializable;
 @Setter
 public class EmployeeReport implements Serializable {
     private int department;
-    private int countOfEmployees;
+    private Long countOfEmployees;
     private int minSalary;
     private int maxSalary;
-    private int averageSalary;
+    private double averageSalary;
 }
