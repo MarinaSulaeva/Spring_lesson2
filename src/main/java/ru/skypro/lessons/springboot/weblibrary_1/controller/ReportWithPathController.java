@@ -7,10 +7,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.skypro.lessons.springboot.weblibrary_1.DTO.ReportWithPathDTO;
 import ru.skypro.lessons.springboot.weblibrary_1.service.EmployeeService;
 import ru.skypro.lessons.springboot.weblibrary_1.service.ReportWithPathService;
@@ -29,8 +26,8 @@ public class ReportWithPathController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping
-    public Integer getReport() throws IOException {
+    @PostMapping("/")
+    public Integer getReport(@RequestParam("id") Integer id) throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(employeeService.getReport());
@@ -38,8 +35,7 @@ public class ReportWithPathController {
         Files.writeString(file.toPath(), json);
         ReportWithPathDTO reportWithPathDTO = new ReportWithPathDTO();
         reportWithPathDTO.setPath(file.getAbsolutePath());
-        //без установления id метод не работает
-        reportWithPathDTO.setId(2);
+        reportWithPathDTO.setId(id);
         reportWithPathService.addReportWithPath(reportWithPathDTO);
         return reportWithPathDTO.getId();
     }

@@ -23,14 +23,13 @@ public class ReportController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping
-    public Integer getReport() throws JsonProcessingException {
+    @PostMapping("/")
+    public Integer getReport(@RequestParam("id") Integer id) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(employeeService.getReport());
         ReportDTO reportDTO = new ReportDTO();
         reportDTO.setFile(json);
-        reportDTO.setId(2);
-        //без строки с установлением id выдавало ошибку 404
+        reportDTO.setId(id);
         reportService.addReport(reportDTO);
         return reportDTO.getId();
     }
