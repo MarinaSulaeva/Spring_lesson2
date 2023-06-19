@@ -4,6 +4,6 @@ import ru.skypro.lessons.springboot.weblibrary_1.DTO.ReportDTO;
 
 
 public interface ReportService {
-    void addReport(ReportDTO reportDTO);
+    Integer addReport(ReportDTO reportDTO);
     ReportDTO getReportById(Integer id);
 }

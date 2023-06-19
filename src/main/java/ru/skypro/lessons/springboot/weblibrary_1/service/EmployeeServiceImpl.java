@@ -83,9 +83,6 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public void addEmployee(EmployeeDTO employeeDTO) {
-        if ( employeeDTO.getId()<= employeeRepository.findAllEmployeeFullInfo().size()) {
-            throw new IllegalArgumentException("Введен не корректный ID");
-        }
         employeeRepository.save(employeeDTO.toEmployee());
     }
 

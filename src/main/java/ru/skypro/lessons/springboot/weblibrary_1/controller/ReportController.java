@@ -24,14 +24,12 @@ public class ReportController {
     }
 
     @PostMapping("/")
-    public Integer getReport(@RequestParam("id") Integer id) throws JsonProcessingException {
+    public Integer getReport() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(employeeService.getReport());
         ReportDTO reportDTO = new ReportDTO();
         reportDTO.setFile(json);
-        reportDTO.setId(id);
-        reportService.addReport(reportDTO);
-        return reportDTO.getId();
+        return reportService.addReport(reportDTO);
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)

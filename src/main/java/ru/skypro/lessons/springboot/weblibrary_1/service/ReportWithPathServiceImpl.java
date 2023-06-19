@@ -14,11 +14,8 @@ public class ReportWithPathServiceImpl implements ReportWithPathService{
     }
 
     @Override
-    public void addReportWithPath(ReportWithPathDTO reportWithPathDTO) {
-        if ( reportWithPathDTO.getId()<= reportWithPathRepository.findAll().size()) {
-            throw new IllegalArgumentException("Введен не корректный ID");
-        }
-        reportWithPathRepository.save(reportWithPathDTO.toReportWithPath());
+    public Integer addReportWithPath(ReportWithPathDTO reportWithPathDTO) {
+        return reportWithPathRepository.save(reportWithPathDTO.toReportWithPath()).getId();
     }
 
     @Override

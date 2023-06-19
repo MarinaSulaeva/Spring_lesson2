@@ -27,7 +27,7 @@ public class ReportWithPathController {
     }
 
     @PostMapping("/")
-    public Integer getReport(@RequestParam("id") Integer id) throws IOException {
+    public Integer getReport() throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(employeeService.getReport());
@@ -35,9 +35,7 @@ public class ReportWithPathController {
         Files.writeString(file.toPath(), json);
         ReportWithPathDTO reportWithPathDTO = new ReportWithPathDTO();
         reportWithPathDTO.setPath(file.getAbsolutePath());
-        reportWithPathDTO.setId(id);
-        reportWithPathService.addReportWithPath(reportWithPathDTO);
-        return reportWithPathDTO.getId();
+        return reportWithPathService.addReportWithPath(reportWithPathDTO);
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)

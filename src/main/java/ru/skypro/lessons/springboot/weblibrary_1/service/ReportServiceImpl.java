@@ -16,11 +16,8 @@ public class ReportServiceImpl implements ReportService{
     }
 
     @Override
-    public void addReport(ReportDTO reportDTO) {
-        if ( reportDTO.getId()<= reportRepository.findAll().size()) {
-            throw new IllegalArgumentException("Введен не корректный ID");
-        }
-        reportRepository.save(reportDTO.toReport());
+    public Integer addReport(ReportDTO reportDTO) {
+        return reportRepository.save(reportDTO.toReport()).getId();
     }
 
     @Override
