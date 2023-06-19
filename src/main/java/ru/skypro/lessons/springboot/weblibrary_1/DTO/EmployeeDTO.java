@@ -5,12 +5,15 @@ import lombok.Setter;
 import ru.skypro.lessons.springboot.weblibrary_1.pojo.Employee;
 import ru.skypro.lessons.springboot.weblibrary_1.pojo.Position;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
-public class EmployeeDTO {
+public class EmployeeDTO implements Serializable {
     private Integer id;
     private String name;
     private int salary;
+    private Integer department;
     private Position position;
 
 
@@ -20,6 +23,7 @@ public class EmployeeDTO {
         employeeDTO.setName(employee.getName());
         employeeDTO.setSalary(employee.getSalary());
         employeeDTO.setPosition(employee.getPosition());
+        employeeDTO.setDepartment(employee.getDepartment());
         return employeeDTO;
     }
 
@@ -29,6 +33,7 @@ public class EmployeeDTO {
         employee.setName(this.getName());
         employee.setSalary(this.getSalary());
         employee.setPosition(this.getPosition());
+        employee.setDepartment(this.getDepartment());
         return employee;
     }
 }

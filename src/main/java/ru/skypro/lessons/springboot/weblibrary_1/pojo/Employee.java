@@ -20,6 +20,8 @@ public class Employee {
 
     private String name;
     private int salary;
+    @Column(name = "department", nullable = true)
+    private Integer department;
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "position_id")
     private Position position;
