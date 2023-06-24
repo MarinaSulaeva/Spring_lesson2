@@ -1,6 +1,6 @@
 package ru.skypro.lessons.springboot.weblibrary_1.controller;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,6 @@ import ru.skypro.lessons.springboot.weblibrary_1.service.EmployeeService;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 @RestController
 @RequestMapping("/admin/employees")
