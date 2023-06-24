@@ -18,8 +18,8 @@ public class AuthUser {
     @Column(nullable = false, unique = true)
     private String username;
     private String password;
-    @JoinColumn(name = "user_id")
-    @OneToMany(fetch = FetchType.EAGER)
-    private List<Authorities> authoritiesList;
+    @JoinColumn(name = "authorities_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Authorities authorities;
 
 }

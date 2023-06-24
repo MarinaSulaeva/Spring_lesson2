@@ -16,8 +16,6 @@ public class Authorities implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String authority;
-//    @ManyToOne
-//    @JoinColumn(name = "auth_user_id")
-//    private AuthUser user;
+
 
 }

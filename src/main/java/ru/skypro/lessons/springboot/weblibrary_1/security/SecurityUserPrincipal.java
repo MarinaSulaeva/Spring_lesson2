@@ -16,7 +16,7 @@ public class SecurityUserPrincipal implements UserDetails {
     public SecurityUserPrincipal(AuthUser user) {
         this.username = user.getUsername();
         this.password = user.getPassword();
-        this.authoritiesList = user.getAuthoritiesList().stream()
+        this.authoritiesList = List.of(user.getAuthorities()).stream()
                 .map(SecurityGrantedAuthorities::new)
                 .toList();
     }

@@ -1,15 +1,14 @@
 package ru.skypro.lessons.springboot.weblibrary_1.security;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class SecurityUserDetailsService implements UserDetailsService {
 
     private UserRepository userRepository;
