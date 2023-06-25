@@ -26,7 +26,6 @@ import javax.sql.DataSource;
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
-
     @Autowired
     private final UserDetailsService userDetailsService;
 
