@@ -1,4 +1,5 @@
 package ru.skypro.lessons.springboot.weblibrary_1.service;
+import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.lessons.springboot.weblibrary_1.DTO.EmployeeDTO;
 import ru.skypro.lessons.springboot.weblibrary_1.DTO.EmployeeFullInfo;
 import ru.skypro.lessons.springboot.weblibrary_1.DTO.EmployeeReport;
@@ -10,9 +11,9 @@ public interface EmployeeService {
 
     int getSumSalary();
 
-    Optional<EmployeeFullInfo> getMaxSalary();
+    EmployeeFullInfo getMaxSalary();
 
-    Optional<EmployeeFullInfo> getMinSalary();
+    EmployeeFullInfo getMinSalary();
 
     List<EmployeeFullInfo> getEmployeeWithSalaryAboveAverage();
 
@@ -32,4 +33,6 @@ public interface EmployeeService {
     EmployeeFullInfo getEmployeeByIdFullInfo(Integer id);
 
     List<EmployeeReport> getReport();
+
+    void uploadEmployeeFromFile(MultipartFile file);
 }

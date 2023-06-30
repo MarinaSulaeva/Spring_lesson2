@@ -36,4 +36,15 @@ public class EmployeeDTO implements Serializable {
         employee.setDepartment(this.getDepartment());
         return employee;
     }
+
+    @Override
+    public String toString() {
+        return "EmployeeDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", salary=" + salary +
+                ", department=" + department +
+                ", position=" + position +
+                '}';
+    }
 }

@@ -41,16 +41,6 @@ public class AdminEmployeeController {
 
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void uploadEmployeeFromFile(@RequestParam("file") MultipartFile file) {
-        try (InputStream inputStream = file.getInputStream()) {
-            int streamSize = inputStream.available();
-            byte[] bytes = new byte[streamSize];
-            inputStream.read(bytes);
-            String json = new String(bytes, StandardCharsets.UTF_8);
-            ObjectMapper objectMapper = new ObjectMapper();
-            EmployeeDTO employeeDTO = objectMapper.readValue(json, EmployeeDTO.class);
-            employeeService.addEmployee(employeeDTO);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        employeeService.uploadEmployeeFromFile(file);
     }
 }

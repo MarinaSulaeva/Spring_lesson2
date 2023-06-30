@@ -27,27 +27,12 @@ public class ReportWithPathController {
     }
 
     @PostMapping("/")
-    public Integer getReport() throws IOException {
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = objectMapper.writeValueAsString(employeeService.getReport());
-        File file = new File("report.json");
-        Files.writeString(file.toPath(), json);
-        ReportWithPathDTO reportWithPathDTO = new ReportWithPathDTO();
-        reportWithPathDTO.setPath(file.getAbsolutePath());
-        return reportWithPathService.addReportWithPath(reportWithPathDTO);
+    public Integer getReport() {
+        return reportWithPathService.addReportWithPath();
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public ResponseEntity<Resource> getReportById(@PathVariable Integer id) {
-
-        String fileName = "report.json";
-        String path = reportWithPathService.getReportWithPathById(id).getPath();
-        File file = new File(path);
-        Resource resource = new PathResource(file.getPath());
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(resource);
+        return reportWithPathService.getReportWithPathById(id);
     }
 }

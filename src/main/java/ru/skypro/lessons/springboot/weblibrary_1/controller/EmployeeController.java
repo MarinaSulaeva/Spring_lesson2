@@ -5,7 +5,6 @@ import ru.skypro.lessons.springboot.weblibrary_1.DTO.EmployeeDTO;
 import ru.skypro.lessons.springboot.weblibrary_1.DTO.EmployeeFullInfo;
 import ru.skypro.lessons.springboot.weblibrary_1.service.EmployeeService;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/employee")
@@ -27,12 +26,12 @@ public class EmployeeController {
     }
 
     @GetMapping("/salary/max")
-    public Optional<EmployeeFullInfo> getMaxSalary() {
+    public EmployeeFullInfo getMaxSalary() {
     return employeeService.getMaxSalary();
     }
 
     @GetMapping("/salary/min")
-    public Optional<EmployeeFullInfo> getMinSalary(){
+    public EmployeeFullInfo getMinSalary(){
         return employeeService.getMinSalary();
     }
 
