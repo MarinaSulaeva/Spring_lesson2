@@ -24,24 +24,13 @@ public class ReportController {
     }
 
     @PostMapping("/")
-    public Integer getReport() throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = objectMapper.writeValueAsString(employeeService.getReport());
-        ReportDTO reportDTO = new ReportDTO();
-        reportDTO.setFile(json);
-        return reportService.addReport(reportDTO);
+    public Integer getReport() {
+        return reportService.addReport();
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public ResponseEntity<Resource> getReportById(@PathVariable Integer id) {
-
-        String fileName = "report.json";
-        String json = reportService.getReportById(id).getFile();
-        Resource resource = new ByteArrayResource(json.getBytes());
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(resource);
+        return reportService.getReportById(id);
     }
 
 }
