@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: 6
+      author: Marina
+      changes:
+        - createTable:
+            tableName: authorities
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: authority
+                  type: varchar(255)
+

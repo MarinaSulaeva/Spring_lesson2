@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 8
+      author: Marina
+      changes:
+        - modifyDataType:
+            columnName: id
+            newDataType: bigint
+            tableName: auth_user

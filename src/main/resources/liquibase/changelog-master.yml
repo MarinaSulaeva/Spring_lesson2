@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - include:
+      file: liquibase/changesets/create-table-position.yml
+  - include:
+      file: liquibase/changesets/create-table-employee.yml
+  - include:
+      file: liquibase/changesets/create-table-report.yml
+  - include:
+      file: liquibase/changesets/create-table-report-with-path.yml
+  - include:
+      file: liquibase/changesets/create-table-authUser.yml
+  - include:
+      file: liquibase/changesets/create-table-authorities.yml
+  - include:
+      file: liquibase/changesets/change-table-authorities.yml
+  - include:
+      file: liquibase/changesets/change-table-authUser.yml
