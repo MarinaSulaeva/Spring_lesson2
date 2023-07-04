@@ -1,9 +1,0 @@
-databaseChangeLog:
-  - changeSet:
-      id: 6
-      author: Marina
-      changes:
-        - modifyDataType:
-            columnName: id
-            newDataType: bigint
-            tableName: authorities
