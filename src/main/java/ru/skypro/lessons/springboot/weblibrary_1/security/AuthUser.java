@@ -19,9 +19,6 @@ public class AuthUser {
     private String username;
     private String password;
     private int enabled;
-//    @JoinColumn(name = "authorities_id")
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    private Authorities authorities;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
